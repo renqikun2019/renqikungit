@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.goods {
+    width: 1160px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+.goods li {
+    width: 200px;
+    padding: 10px;
+    float: left;
+    margin: 0 10px 10px 0;
+    border: 1px solid #ccc;
+    height: 310px;
+    position: relative;
+}
+
+.goods li p {
+    width: 200px;
+    height: 48px;
+    line-height: 24px;
+    overflow: hidden;
+}
+
+.goods li img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+
+.goods li span {
+   display: block;
+}
+    </style>
+</head>
+<body>
+<div class="goods">
+
+</div>
+<script src="script/ajax.js"></script>
+    <script>
+    const goods = document.querySelector('.goods');
+        $ajax({
+            url:'http://localhost/JS2002/php/taobaodata.php',
+            success:function(data){
+                let arrdata = JSON.parse(data);
+                let strhtml = '<ul>';
+                for(let value of arrdata) {
+                    strhtml +=`
+                        <li>
+                            <a href="detail.html?sid=${value.sid}">
+                                <img src="${value.url}">
+                                <p>${value.title}</p>
+                                <span class="price">${value.price}</span>
+                                <span>${value.sailnumber}</span>
+                            </a>
+                        </li>
+                    `;
+                }
+                strhtml+='</ul>';
+                goods.innerHTML = strhtml;
+            }
+        })
+    </script>
+</body>
+</html>
